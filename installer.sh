@@ -17,6 +17,7 @@ TEST=0
 FORCE=0
 PYTHON='python2.7'
 VENVTOOL=
+NO_VENV=0
 
 # Internal variables
 _PYTHON_PATH=
@@ -50,6 +51,7 @@ Installation/update variables:
 -e|--venv:          Python virtual environment tools to use.
                     Currently the Python 2.x virtualenv
 -l|--local-dev      Installs lie studio components inplace, making the easily editable.
+-n|--no-venv        Do not use a virtual environment but system installed python packages
 
 -h|--help:          This help message
 """
@@ -84,6 +86,10 @@ for i in "$@"; do
         ;;
         -l|--local-dev)
         LOCALDEV=1
+        shift # past argument with no value
+        ;;
+        -n|--no-venv)
+        NO_VENV=1
         shift # past argument with no value
         ;;
         *)
@@ -361,20 +367,26 @@ echo "==================== eTOXlie installer script ====================="
 echo "Date: $( date )"
 echo "User: $( whoami )"
 echo "System: $( uname -mpnsr )"
+echo "Install dir: $ROOTDIR"
 echo "====================================================================="
 echo ""
 
 cd $ROOTDIR
 
 # 1) Resolve Python version and virtual env options
-_resolve_python_version
-_resolve_python_venv
+if [[ $NO_VENV -eq 0 ]]; then
+  _resolve_python_version
+  _resolve_python_venv
+else
+  echo "INFO: Skip setup of Python virtual environment."
+  echo "INFO: Python package dependencies should be installed on the system."
+fi
 
 # 2) Check directory structure
 _check_dir_structure
 
 # 3) Install virtual environment
-if [[ $SETUP -eq 1 ]]; then
+if [[ $SETUP -eq 1 && $NO_VENV -eq 0 ]]; then
      _setup_venv
 fi
 

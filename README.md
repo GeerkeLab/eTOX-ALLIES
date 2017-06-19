@@ -33,6 +33,7 @@ Run the eTOX ALLIES installer under bash:
     >> ./installer.sh -s
 
 This will install all Python dependencies in a Python virtual environment from the Python package repository (pip).
+Please note that the packages installed via pip need the python development headers installed (python-dev)
 
 
 ### Configuration

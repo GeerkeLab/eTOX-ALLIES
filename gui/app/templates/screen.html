@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+
+<h1>eTOXlie</h1>
+
+<ul class="nav">
+   <li><a href="#home">Home</a></li>
+   <li><a href="models">Models</a></li>
+   <li><a href="#contact">Running jobs</a></li>
+   <li><a href="theory">Theory</a></li>
+   <li><a href="#about">About</a></li>
+</ul>
+
+<div>
+    <fieldset>
+	<p> Here describe the method </p>
+    </fieldset>
+</div>
+<div>
+<form action>
+	<fieldset>  	
+  		First name:<br>
+  		<input type="text" name="firstname" value="Mickey">
+  		<br>
+  		Last name:<br>
+  		<input type="text" name="lastname" value="Mouse">
+  		<br><br>
+  		<input type="submit" value="Submit">
+	</fieldset>
+</form>
+
+
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+
+
+
+
+</div> 

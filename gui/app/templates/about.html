@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+<!--Header -->
+<script type='text/javascript' src="{{ url_for('static', filename='head.js') }}"></script>
+
+<div>
+	<br />
+	<img src="{{ url_for('static', filename='IMI Logo2014-VertPos.jpg') }}" alt="IMI logo" height=70 align=left style="margin-left:10%;">
+    <img src="{{ url_for('static', filename='logo_eTOX_color.jpg') }}" alt="eTOX log" height=70 align=left style="margin-left: 0%;">
+    <img src="{{ url_for('static', filename='VUlogo.png') }}" alt="VUA logo"  height=70 align=right style="margin-right: 7%;">
+	<br />
+    <p class="title">Contacts</p>
+    <fieldset style='text-'>
+    <p></p>
+    </fieldset>
+    <p class="title">Contributors</p>
+    <fieldset>
+	<p>eTOX ALLIES is developed at the Molecular Toxicology group of VU Amsterdam University</p>
+	<p style="padding-top:30px;"><b>Scientific Development:</b></p>
+	<ul>
+		<li>Daan Geerke</li>
+		<li>Luigi Capoferri</li>
+	</ul>
+	<p style="padding-top:30px;"><b>Code Development</b></p>
+	<ul>
+		<li>Luigi Capoferri</li>
+		<li>Arien Rustenburg</li>
+		<li>Tsjerk Wassenaar</li>
+	</ul>
+    </fieldset>
+    <p class="title">Fundings</p>
+    <fieldset>
+    <p>The creation of eTOX ALLIES was possible thanks to the funding provided by:</p>
+    <ul>
+    	<li>eTOXprojects</li>
+    	<li>NWO</li>
+    </ul>
+    </fieldset>
+</div>

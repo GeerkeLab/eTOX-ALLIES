@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+<script type='text/javascript' src="{{ url_for('static', filename='showmols.js') }}"></script>
+</head>
+
+
+<body>
+<div style="word-break:break-all; width:100%;">
+
+<!--Add conf prot and link to files -->
+
+	<table style="visibility:visible; border: 0px">
+		<tbody>
+			<tr>
+				<td class="modDesc">Creation Date</td>
+				<td class="modProp">{{param.date}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">Version</td>
+				<td class="modProp">{{param.version}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">num Simulations</td>
+				<td class="modProp">{{param.LIE.nsims}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">Equation</td>
+				<td class="modProp">&Delta;G (kJ mol<sup>-1</sup>)= {{'%0.3f'%param.LIE.params[0] | float}} &times; &Delta;V<sub>VdW</sub>
+					+ {{'%.3f'%param.LIE.params[1] | float}} &times; &Delta;V<sub>Ele</sub> + {{param.LIE.params[2]}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">RMSE</td>
+				<td class="modProp">{{'%.3f'%param.LIE.rmse | float}} (kJ mol<sup>-1</sup>)</td>
+			</tr>
+			<tr>
+				<td class="modDesc">SDEP</td>
+				<td class="modProp">{{'%.3f'%param.LIE.sdep | float}} (kJ mol<sup>-1</sup>)</td>
+			</tr>
+			<tr>
+				<td class="modDesc">r Pearson</td>
+				<td class="modProp">{{'%.3f'%param.r | float}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">s Spearman</td>
+				<td class="modProp">{{'%.3f'%param.s | float}}</td>
+			</tr>
+		</tbody>		
+	</table>
+</div>
+<hr />
+{{plot | safe}}
+<table style="visibility:visible; border: 0px; display: inline">
+	<tbody>
+	{% for cpd in param.trainSet %}
+		<tr>
+			<td style="width: 20px;"><b>{{ loop.index }}</b></td>
+			<td onmouseenter="changeColor(this,'red')" onmouseout="changeColor(this,'black')" 
+			onclick="showMol('{{ cpd.smi }}','/showMol/')"><i>{{ cpd.smi }}</i></td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+
+</body>
+</html>

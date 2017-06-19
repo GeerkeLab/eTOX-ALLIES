@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+
+<script>
+function displayOL(enabled,idObj) {
+	if (enabled) {
+		document.getElementById(idObj).style.visibility = "visible";
+		document.getElementById(idObj).style.overflow = "visible";
+		document.getElementById('minus'+idObj).style.display = "";
+     	document.getElementById("plus"+idObj).style.display = "none"; 
+  	} else {
+     	document.getElementById(idObj).style.visibility = "collapse";
+    	document.getElementById(idObj).style.overflow = "hidden";
+     	document.getElementById("minus"+idObj).style.display = "none";
+     	document.getElementById("plus"+idObj).style.display = "";
+  	}
+}
+
+function changeColor(elmnt,clr) {
+    elmnt.style.color = clr;
+}
+
+function show_confirm(jobid) {
+ 	var save = window.confirm('Are you sure you wanna remove files for job '+jobid+'?');
+	if (save == true) {
+		post('/cleanJob',{jobName: jobid});
+		}
+}
+
+function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+</script>
+<script type='text/javascript' src="{{ url_for('static', filename='showmols.js') }}"></script>
+
+
+</head>
+
+<body>
+<!--Header -->
+<script type='text/javascript' src="{{ url_for('static', filename='head.js') }}"></script>
+
+<div>
+	<ol>
+		<table class="job">
+			<th class="job" style="width:5%;"></th>
+			<th class="job" style="width:35%;">Job name</th>
+			<th class="job" style="width:15%;">Model</th>
+			<th class="job" style="width:5%;">Ver.</th>
+			<th class="job" style="width:5%;">n</th>
+			<th class="job" style="width:10%;">Date Sub</th>
+			<th class="job" style="width:10%;">Status</th>
+			<th class="job" style="width:10%;">Type</th>
+			<th class="job" style="width:10%;">Del</th>
+		</table>		
+        {% for job in listJobs %}
+ 			<table class="job">
+			  <tbody>
+				<tr class="job">
+					<td class="job" style="width:5%;">	            	
+            	 	(<a href="#" onclick="displayOL(true,'{{job.name}}')" id="plus{{job.name}}"> + </a>
+<a href="#" style="display:none" onclick="displayOL(false,'{{job.name}}')" id="minus{{job.name}}" > - </a>)
+					</td>
+ 					<td class="job" style="width:35%;text-align: center;">{{job.name}}</td>
+					<td class="job" style="width:15%;text-align: center;">{{job.model}}</td>
+					<td class="job" style="width:5%;text-align: center;">{{job.version}}</td>
+					<td class="job" style="width:5%;text-align: center;">{{job.ncpd}}</td>
+					<td class="job" style="width:10%;text-align: center;">{{job.date}}</td>
+					<td class="job" style="width:10%;text-align: center;">{{job.status}}</td>
+					<td class="job" style="width:10%;text-align: center;">{{job.type}}</td>
+					<td class="job" style="width:5%;text-align: center;"><input type="button" onclick="show_confirm('{{job.name}}');" value="DEL"></td>
+				</tr>
+			  </tbody>
+			</table>
+                
+            <table id="{{job.name}}" style="width:100%;border: 1px solid black;">                   	
+              <tbody>
+                <tr>
+                    <th style="width:5%;text-align: center;">Rep</th>
+                    <th style="width:25%;text-align: center;">SMILE</th>
+                    <th style="width:25%;text-align: center;">Job name</th>
+					<th style="width:10%;text-align: center;">Status</th>
+					<th style="width:10%;text-align: center;">&Delta;G<sub>EXP</sub></th>
+					<th style="width:10%;text-align: center;">&Delta;G<sub>CALC</sub></th>
+					<th style="width:5%;text-align: center;">CI</th>
+					<th style="width:5%;text-align: center;">Del</th>
+                </tr>
+                   	{% for cpd in job.cpds %}
+                    <tr>
+						<td style="width:5%;text-align: center;" onmouseenter="changeColor(this,'red')" 
+						onmouseout="changeColor(this,'black')" onclick="showMol('{{cpd.smi}}','/showMol/')">Click Me</td>
+                        <td title="{{cpd.smi}}" style="width:25%;text-align: center;">{{cpd.smi}}</td>
+                        <td style="width:25%;text-align: center;">{{cpd.JobName}}</td>
+						<td style="width:10%;text-align: center;">{{cpd.Status}}</td>
+						<td style="width:10%;text-align: center;">{%if cpd.DGexp%}
+																		{{('%0.2f' % cpd.DGexp | float)}}
+																  {% else %}
+    																	NONE
+																  {%endif %}</td>
+						<td style="width:10%;text-align: center;">{%if cpd.DGcalc%}
+																		{{('%0.2f' % cpd.DGcalc | float)}}
+																  {% else %}
+    																	NONE
+																  {%endif %}</td>
+						<td style="width:5%;text-align: center;">{{cpd.CI}}</td>
+						<td style="width:5%;text-align: center;"><input type="button" onclick="show_confirm('{{cpd.JobName}}');" value="DEL"></td>
+                     </tr>
+                    {% endfor %}
+              </tbody>
+            </table>
+
+     	{% endfor %}
+     </ol>
+
+
+</div>
+<style>
+	td {
+		white-space: 
+	}
+</style>
+</body>

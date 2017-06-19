@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+<script>
+	
+	function enableItem (item,disable) {
+		document.getElementById(item).disabled=disable;
+	}
+
+	function selectModel (proName,versions) {
+		listVers=document.getElementsByClassName('modelVer');
+		for (var i=0; i < listVers.length; i++) {
+			listVers[i].hidden=true;
+		}
+		document.getElementById('descModVer').src='about:blank';
+		for (i = 0; i < versions.length; i++) {
+			document.getElementById('ver'+versions[i]).hidden=false;
+			vardesc='document.getElementById(\'descModVer\').src=\'/models/descModVer/'+proName+'/'+versions[i]+'\';';
+			document.getElementById('ver'+versions[i]).setAttribute('onclick',vardesc);
+			console.log(document.getElementById('ver'+versions[i]).onclick);
+		}
+		document.getElementById('descMod').src="/models/descModel/"+proName;
+	}
+	
+
+</script>
+</head>
+
+<body>
+<!--Header -->
+<script type='text/javascript' src="{{ url_for('static', filename='head.js') }}"></script>
+
+<div>
+	<p class="title">Available models</p>
+
+		<fieldset>
+			<table class="job">
+				<tr>
+					<td class="job" style="width:35%;font-size:150%;">Model name:</td>
+	  				<td class="job" style="width:35%;font-size:150%;">Model Version:</td>
+	  				<td class="job" style="width:35%;font-size:150%;"></td>
+	  			</tr>
+	  			
+	  			<tr>
+	  				<td class="job" style="width:35%;">
+	  					<select name="ProtMod" style="font-size:100%;height:100px;width:30%;" multiple>
+	    					{% for prot in listModels %}
+	    						<option value={{prot.name}} onclick="selectModel('{{prot.name}}',{{prot.vers}});">{{prot.name}}</option>
+    						{% endfor %}
+  						</select>
+					</td>
+	  				<td class="job" style="width:35%;">
+	  					<select name="ProtModVer" id="ProtModVer" style="font-size:100%;height:100px;width:30%;" multiple>
+	    					{% for ver in listVers %}
+	    						<option class="modelVer" id="ver{{ver}}" value={{ver}} onclick="" hidden>{{ver}}</option>
+	    					{% endfor %}
+  						</select>
+  					</td>
+  					<td class="job" style="width:35%;">
+  						<form action="models/newModel">
+    						<input type="submit" value="Create New" style="height:50px;font-size:120%">
+						</form>
+						<br>
+  						<form action="models/toElab">
+    						<input type="submit" value="Connect to eTOXlab" style="height:30px;font-size:80%">
+						</form>						
+  						
+  					</td>
+				</tr>
+			</table>
+
+  			<br>
+  		</fieldset>
+  		
+  	<br>
+  	<p class="title" >Model Details</p>	
+  	<iframe id="descMod" src="" width="80%" height="400px" style="margin-left:10%;">No model loaded</iframe>
+  	<br />	
+  	<p class="title">Version Details</p>
+  		<iframe id="descModVer" src="" width="80%" height="800px" style="margin-left:10%;">No Version loaded</iframe> 			
+</div> 

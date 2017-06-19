@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+<script>
+	
+	function enableItem (item,disable) {
+
+		document.getElementById(item).disabled=disable;
+	}
+
+	function enableVers (versions) {
+		listVers=document.getElementsByClassName('modelVer');
+		for (var i=0; i < listVers.length; i++) {
+			listVers[i].hidden=false;
+		}
+		for (i in versions) {
+			document.getElementById('ver'+i).hidden=false;
+		}
+	}
+
+</script>
+</head>
+
+<body>
+
+<script type='text/javascript' src="{{ url_for('static', filename='head.js') }}"></script>
+
+<div>
+	<p class='title'>Submit new job</p>
+	<form action="/createJob" method='POST' enctype="multipart/form-data">
+		<fieldset>  	
+			<p style="font-size:150%;">Type of calculation:</p>
+  			<input type="radio" name="prediction" value=true checked 
+  			onclick="enableItem('ProtModVer',false);enableItem('activity',true);enableItem('isGamma',true);enableItem('fixBeta',true);"> Prediction
+  			<br>
+	  		<input type="radio" name="prediction" value=false 
+	  		onclick="enableItem('ProtModVer',true);enableItem('activity',false);enableItem('isGamma',false);enableItem('fixBeta',false);"> Calibration
+			<br><br>
+	  		<p style="font-size:150%;">Model name:</p>
+	  		<select name="ProtMod" style="font-size:100%;">
+	    		<option></option>
+	    		{% for prot in listModels %}
+	    		<option value={{prot.name}} onclick="enableVers('{{prot.vers}}');">{{prot.name}}</option>
+    			{% endfor %}
+  			</select>
+			<br><br>
+	  		<p style="font-size:150%;">Model version:</p>
+	  		<select name="ProtModVer" id="ProtModVer" style="font-size:100%;">
+	    		{% for ver in listVers %}
+	    		<option class="modelVer" id="ver{{ver}}" value={{ver}} hidden>{{ver}}</option>
+	    		{% endfor %}
+  			</select>
+			<br><br>
+			<label>  
+				<input type="checkbox" name="isGamma" value=true id="isGamma" disabled> &#947 &#8800 0
+			</label>
+			<br>
+			<label>
+				<input type="checkbox" name="fixBeta" value=true id="fixBeta" disabled> &#946 = 0.5
+			</label>
+  			<br><br>
+  			<p style="font-size:150%;">Load SDF file:</p>
+  			<input name="sdfFile" type="file" id="sdfFile" style="font-size:100%;" accept=".sdf"/>
+  			<br><br>
+  			<p style="font-size:150%;">SDF Activity field:</p>
+  			<input name="fieldActivity" type='text' id="activity" value='Activity' style="font-size:100%;" disabled/>
+  			<br><br>
+	  		<input type="submit" style="font-size:150%;" value="Submit calculation">
+	
+		</fieldset>
+	</form>
+</div> 

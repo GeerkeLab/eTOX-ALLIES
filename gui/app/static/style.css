@@ -1,0 +1,208 @@
+h1 {
+    position: static;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    vertical-align: middle;
+    display:block;
+    background-color:white;
+    color:#000066;
+    font-size: 40px;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    margin: 10px;
+}
+
+
+
+.nav{
+    list-style:none;
+    margin:0px;
+    padding:0;
+    text-align:center;
+    position: inline;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    left: 0px;	 
+    background-color:#000066;	 
+	 
+}
+.nav li{
+    display:inline;
+}
+.nav a{
+	display:inline-block;
+    min-width: 120px;
+    background-color: #000066;
+    text-align: center;
+    color:white;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.nav a:hover, a:active {
+    background-color: #43A441;	 
+    color:white
+}
+
+div.container{
+	width:980px;	
+	margin:0 auto;
+    left: 0px;
+	text-align:center;
+}
+
+p.title {
+	margin-left:10%;
+    position:relative;
+    clear: both;
+    font-size:200%;
+    color:#43A441;
+    text-align: left;
+}
+
+p {
+  margin-left:10px;
+  position:relative;
+  clear: both;
+}
+
+div.wrap {
+  position:relative;
+  margin:50px auto;
+  width:980px;
+}
+
+div {
+  position:relative;
+  top:0px;
+}
+
+form    {
+	margin-top: 0px;
+    left: 0;
+    margin: 1px auto;
+}
+
+input.newMod {
+	font-size:100%;
+	float:right;
+	padding:0px;
+	margin-left: 20px;
+	vertical-align: middle;
+	position: relative;
+	height: 50px;
+}
+
+input.newModCoord {
+	font-size:100%;
+	float:right;
+	padding:0px;
+	margin-left: 20px;
+	vertical-align: middle;
+	position: relative;
+	height: 50px;
+	width: 100px;
+	height:50px;
+	clear: none;
+}
+
+input.newModGuessCoord {
+	font-size:100%;
+	float:left;
+	padding:0px;
+	margin-left: 20px;
+	vertical-align: middle;
+	position: relative;
+	height: 50px;
+	clear: none;
+}
+
+label.newModCoord {
+	font-size:100%;
+	float:left;
+	text-align:left;
+	position: relative;
+	clear: none;
+	margin-right: 20px;
+	line-height: 50px;
+	vertical-align:top;
+	font-weight: bold;
+	display: inline-block;
+}
+
+label.newMod {
+	font-size:100%;
+	float:left;
+	text-align:left;
+	position: relative;
+	clear: both;
+	margin-right: 20px;
+	margin-left: 20px;
+	line-height: 50px;
+	vertical-align:top;
+	font-weight: bold;
+	display: inline-block;
+}
+
+fieldset {
+   position: relative;
+   padding-left: 20px;
+   left: 10%;
+   width: 80%;
+   top: 0px;
+}
+
+option.modelVer {
+	hidden;
+}
+
+table {
+    overflow: hidden;
+    visibility: collapse;
+    width: 100%;
+    border: 0px solid black;
+    border-collapse: collapse;
+	table-layout: fixed;
+	word-wrap: break-word;
+	}
+
+th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+    }
+
+table.job {
+    overflow: visible;
+    visibility: visible;
+    border: none;
+}    
+td.job, th.job {
+	border: none;
+	width:20%;
+	text-align: center;
+}
+
+td.modDesc {
+	width:20%;
+	border: none;
+	color:black;
+	font-size: 100%;
+}
+
+td.modProp {
+	width:80%;
+	border: none;
+	color: black;
+	font-size:100%;
+	font-style: italic;
+}
+
+br, hr {
+	clear:both;
+}

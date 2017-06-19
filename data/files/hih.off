@@ -1,0 +1,136 @@
+!!index array str
+ "HIH"
+!entry.HIH.unit.atoms table  str name  str type  int typex  int resx  int flags  int seq  int elmnt  dbl chg
+ "N" "N" 0 1 131072 1 7 -0.415700
+ "H" "H" 0 1 131072 2 1 0.271900
+ "CA" "CX" 0 1 131072 3 6 0.018800
+ "HA" "H1" 0 1 131072 4 1 0.088100
+ "CB" "CT" 0 1 131072 5 6 -0.046200
+ "HB2" "HC" 0 1 131072 6 1 0.040200
+ "HB3" "HC" 0 1 131072 7 1 0.040200
+ "CG" "CC" 0 1 131072 8 6 -0.026600
+ "ND1" "NA" 0 1 131072 9 7 -0.381100
+ "HD1" "H" 0 1 131072 10 1 0.364900
+ "CE1" "CR" 0 1 131072 11 6 0.205700
+ "HE1" "H5" 0 1 131072 12 1 0.139200
+ "NE2" "NB" 0 1 131072 13 7 0.024900
+ "CD2" "CV" 0 1 131072 14 6 0.129200
+ "HD2" "H4" 0 1 131072 15 1 0.114700
+ "C" "C" 0 1 131072 16 6 0.597300
+ "O" "O" 0 1 131072 17 8 -0.567900
+!entry.HIH.unit.atomspertinfo table  str pname  str ptype  int ptypex  int pelmnt  dbl pchg
+ "N" "N" 0 -1 0.0
+ "H" "H" 0 -1 0.0
+ "CA" "CX" 0 -1 0.0
+ "HA" "H1" 0 -1 0.0
+ "CB" "CT" 0 -1 0.0
+ "HB2" "HC" 0 -1 0.0
+ "HB3" "HC" 0 -1 0.0
+ "CG" "CC" 0 -1 0.0
+ "ND1" "NA" 0 -1 0.0
+ "HD1" "H" 0 -1 0.0
+ "CE1" "CR" 0 -1 0.0
+ "HE1" "H5" 0 -1 0.0
+ "NE2" "NB" 0 -1 0.0
+ "CD2" "CV" 0 -1 0.0
+ "HD2" "H4" 0 -1 0.0
+ "C" "C" 0 -1 0.0
+ "O" "O" 0 -1 0.0
+!entry.HIH.unit.boundbox array dbl
+ -1.000000
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+!entry.HIH.unit.childsequence single int
+ 2
+!entry.HIH.unit.connect array int
+ 1
+ 16
+!entry.HIH.unit.connectivity table  int atom1x  int atom2x  int flags
+ 1 2 1
+ 1 3 1
+ 3 4 1
+ 3 5 1
+ 3 16 1
+ 5 6 1
+ 5 7 1
+ 5 8 1
+ 8 9 1
+ 8 14 1
+ 9 10 1
+ 9 11 1
+ 11 12 1
+ 11 13 1
+ 13 14 1
+ 14 15 1
+ 16 17 1
+!entry.HIH.unit.hierarchy table  str abovetype  int abovex  str belowtype  int belowx
+ "U" 0 "R" 1
+ "R" 1 "A" 1
+ "R" 1 "A" 2
+ "R" 1 "A" 3
+ "R" 1 "A" 4
+ "R" 1 "A" 5
+ "R" 1 "A" 6
+ "R" 1 "A" 7
+ "R" 1 "A" 8
+ "R" 1 "A" 9
+ "R" 1 "A" 10
+ "R" 1 "A" 11
+ "R" 1 "A" 12
+ "R" 1 "A" 13
+ "R" 1 "A" 14
+ "R" 1 "A" 15
+ "R" 1 "A" 16
+ "R" 1 "A" 17
+!entry.HIH.unit.name single str
+ "HIH"
+!entry.HIH.unit.positions table  dbl x  dbl y  dbl z
+ 3.325770 1.547909 -1.607204E-06
+ 3.909407 0.723611 -2.739882E-06
+ 3.970048 2.845795 -1.311163E-07
+ 3.671663 3.400129 -0.889820
+ 3.576965 3.653838 1.232143
+ 2.496995 3.801075 1.241379
+ 3.877484 3.115795 2.131197
+ 4.200813 5.026064 1.321087
+ 3.942782 5.885086 2.382972
+ 3.339725 5.691913 3.169805
+ 4.624274 6.997642 2.182500
+ 4.563048 7.811875 2.904563
+ 5.294011 6.891451 1.061663
+ 5.058974 5.678868 0.492453
+ 5.537741 5.417846 -0.451343
+ 5.485541 2.705207 -4.398755E-06
+ 6.008824 1.593175 -8.449768E-06
+!entry.HIH.unit.residueconnect table  int c1x  int c2x  int c3x  int c4x  int c5x  int c6x
+ 1 16 0 0 0 0
+!entry.HIH.unit.residues table  str name  int seq  int childseq  int startatomx  str restype  int imagingx
+ "HIH" 1 18 1 "p" 0
+!entry.HIH.unit.residuesPdbSequenceNumber array int
+ 0
+!entry.HIH.unit.solventcap array dbl
+ -1.000000
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+!entry.HIH.unit.velocities table  dbl x  dbl y  dbl z
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0
+ 0.0 0.0 0.0

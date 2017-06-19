@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+<script>var nProts = 1;</script>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+</head>
+
+<body>
+
+<script type='text/javascript' src="{{ url_for('static', filename='head.js') }}"></script>
+
+<div style="padding:15px 0;">
+	<p class="title">Create new model</p>
+	<form action="newModel/create" method='POST' enctype="multipart/form-data">
+		<fieldset>
+			<label class="newMod">Model name:
+				<input class="newMod" type="text" name="modName" id="modName" placeholder="Model name" />
+			</label>
+
+			<label class="newMod">Neutral ligand:   
+				<input class="newMod" type="checkbox" name="isIon" value=true id="isIon"/>
+			</label>
+	
+			<label class="newMod">Is it Cyt P450?:   
+				<input class="newMod" type="checkbox" name="isCYP" value=true id="isCYP"
+					 onchange="var act=isChecked('isCYP'); enableClass('newModGuessCoord',act);
+					 if (! act) {checkClass('newModGuessCoord',act); enableClass('newModCoord',(! act))};"/>
+			</label>
+
+			<label class="newMod">Simulation time (ns): 
+				<input class="newMod" type="number" step="any" name="time" id="time" 
+	  					placeholder=1.0000 />
+			</label>
+
+			<p style="padding-top:10px;line-height: 50px;"><b>Residues around binding site:</b></p>
+			<label class="newMod">Guess:
+  				<input class="newMod" type="checkbox" name="guessRes" value=true id="guessRes"
+  					onchange="var act=isChecked('guessRes'); enableItem('resList',act)"/>
+  			</label>
+  			<label class="newMod" style="clear:none;display: inline-block">List:</label>
+				<textarea name="resList" id="resList" rows="10" cols="50">e.g. 234,234,436</textarea>
+		</fieldset>
+		<br>
+		
+		<!-- Protein conformation definition -->
+		<fieldset>
+			<hr>
+			<p style="font-size:120%;"> <b>Protein conformation 1</b></p>
+			<div id="protConf">
+				<label class="newMod"> PDB file:
+  					<input class="newMod" name="pdbFile" type="file" id="pdbFile" accept=".pdb"/>
+				</label>
+				
+				<p ><br><b>Binding site Coordinates (in &#8491): </b></p>
+   				
+   				<label class="newMod">Guess:
+  					<input class="newModGuessCoord" type="checkbox" name="guessCoords" value=true id="guessCoords" disabled=true 
+  					onchange="var act=isChecked('guessCoords'); enableItem('Xcoord',act);enableItem('Ycoord',act);enableItem('Zcoord',act);"/>
+	  			</label>
+  				
+  				<label class="newModCoord">X:	
+  					<input class="newModCoord" type="number" step="any" name="Xcoord" id="Xcoord"
+  						placeholder=0.000 />
+  				</label>
+	  			
+	  			<label class="newModCoord">Y:
+  					<input class="newModCoord" type="number" step="any" name="Ycoord" id="Ycoord" 
+  					placeholder=0.000 />
+  				</label>
+  				
+  				<label class="newModCoord">Z:	
+	  				<input class="newModCoord" type="number" step="any" name="Zcoord" id="Zcoord" 
+	  					placeholder=0.000 />
+  				</label>
+  				
+  				<label class="newMod" style="clear:none;">radius (&#8491):	
+  					<input class="newMod" type="number" step="any" name="radius" id="radius" placeholder=15.0 style="width: 100px; height:50px"/>
+	  			</label>
+				<br><hr>
+			</div>
+		</fieldset>
+		<!-- End protein conformation definition -->
+		
+		<fieldset>
+			<input type="button" id="addProtBut" onclick="addProtInfo('protConf');" value="Add Protein Conformation" >
+
+			<input type="button" id="remProtBut" onclick="removeProtInfo('protConf');" value="Remove Protein Conformation" disabled>
+		</fieldset>
+		<br>
+		<input type="submit" style="font-size:150%;margin-left: 100px;" value="Create Model">
+		<input type="reset" id="goBack" onclick="location.href='/models'" value="Cancel" style="font-size:150%;margin-left: 30px;">
+	</form>
+
+
+
+</div> 

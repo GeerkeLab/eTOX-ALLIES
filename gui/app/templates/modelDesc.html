@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+
+<body>
+<div style="word-break:break-all; width:100%;">
+
+<!--Add conf prot and link to files -->
+
+	<table style="visibility:visible; border: 0px">
+		<tbody>
+			<tr>
+				<td class="modDesc">Model</td>
+				<td class="modProp">{{model.name}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">Docking software</td>
+				<td class="modProp">{{model.dockSoftware}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">pH-dependent ligand protonation</td>
+				<td class="modProp">{{model.pHCorr}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">forceField</td>
+				<td class="modProp">{{model.forceField}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">Simulation time</td>
+				<td class="modProp">{{model.timeSim}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">Protein Topology</td>
+				<td class="modProp"><a href="/Download/model/{{model.name}}/{{model.proteinTop}}">{{model.proteinTop}}</a></td>
+			</tr>
+			<tr>
+				<td class="modDesc">Charge Protein</td>
+				<td class="modProp">{{model.charge}}</td>
+			</tr>	
+			<tr>
+				<td class="modDesc">Residue lining Catalytic site</td>
+				<td class="modProp">{{model.resSite}}</td>
+			</tr>
+			<tr>
+				<td class="modDesc">Protein Positional restraints</td>
+				<td class="modProp"><a href="/Download/model/{{model.name}}/{{model.proteinTopPos}}">{{model.proteinTopPos}}</a></td>
+			</tr>			
+		</tbody>		
+	</table>
+	
+	{% for prot in model.proteinParams %}
+	<p style="left:10%;"><b>Protein {{loop.index}}</b></p>
+	<table style="visibility:visible; border: 0px">
+		<tr>
+			<td class="modDesc">Protein Docking Template</td>
+			<td class="modProp"><a href="/Download/model/{{model.name}}/{{prot.proteinDock}}">{{prot.proteinDock}}</a></td>
+		</tr>
+		<tr>
+			<td class="modDesc">Center Docking coordinates</td>
+			<td class="modProp">{{prot.pocket | join(' ')}}</td>
+		</tr>
+		<tr>
+			<td class="modDesc">Radius docking site</td>
+			<td class="modProp">{{prot.radius}}</td>
+		</tr>
+		<tr>
+			<td class="modDesc">Protein Coordinate (GRO)</td>
+			<td class="modProp"><a href="/Download/model/{{model.name}}/{{prot.proteinCoor}}">{{prot.proteinCoor}}</a></td>
+		</tr>
+	</table>
+	{% endfor %}
+</div>
+</body>
+</html>

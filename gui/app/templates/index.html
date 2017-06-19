@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+
+<script type='text/javascript' src="{{ url_for('static', filename='head.js') }}"></script>
+
+<div>
+    <p class="title"> Automated Line for Linear Interaction Energy-based Screenings </p>
+    <fieldset>
+	<p> eTOX ALLIES is an integrated tool that easily allows binding affinity prediction of small molecule toward proteins by the iterative Linear Interaction Energy method.
+	<br>
+	<br />
+	How to start:
+	<br />
+	- Screen a set of compounds: go to <a href="submit"><i>SUBMIT</i></a> page. Select the model protein and version and upload your <i>SDF</i> file.
+	<br />
+	<br />
+	- Create a model for a new protein: go to <a href="models/newModel"><i>New Model</i></a> in the <i>MODELS</i> page. 
+	Define the properties for the new <i>iLIE</i> model, providing the already optimized (e.g. no missing atoms/ residued, minimized, flipped sidechains) <i>PDB</i> file(s) template for the protein. 
+	<br />
+	<br />
+	- Calibrate a protein model for a training-set of compounds: go to <a href="submit"><i>SUBMIT</i></a>. Select <i>Type of Calculation</i> : <b><i>CALIBRATION</i></b>.
+	Be sure the <i>SDF</i> file of the training set contains a specific field reporting the reference DGbind value.  
+	</p>
+	<br />
+
+    </fieldset>
+</div>
+</body>
+</html>

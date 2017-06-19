@@ -32,11 +32,10 @@ verbLevel={
 }
 
 # Check if Python virtual environment is in sys.path
-venv_path = os.getenv('VIRTUAL_ENV')
+venv_path = os.getenv('VIRTUAL_ENV', '{0}/.etox_venv'.format(__rootpath__))
 venv_active = False
-
 for path in sys.path:
-    packages = '{}*/site-packages'.format(venv_path)
+    packages = '{0}*/site-packages'.format(venv_path)
     if fnmatch.fnmatch(path, packages):
         venvpath = path
         venv_active = True

@@ -378,8 +378,6 @@ if [[ $SETUP -eq 1 ]]; then
      _setup_venv
 fi
 
-_VENVPATH=${ROOTDIR}/.venv
-
 # 4) Install/update python packages
 if [[ $SETUP -eq 1 || $UPDATE -eq 1 ]]; then
     _install_update_packages

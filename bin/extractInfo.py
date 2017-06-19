@@ -10,8 +10,8 @@ import xlsxwriter
 from math import sqrt
 from shutil import rmtree,copyfile
 
-from eTOXlie.etox import settings
-from eTOXlie.etox.core import jobHandler
+from eTOX_ALLIES.etox import settings
+from eTOX_ALLIES.etox.core import jobHandler
 
 from settings import modelDir, tmpFolder
 

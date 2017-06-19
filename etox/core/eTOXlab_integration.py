@@ -2,8 +2,8 @@ import os,sys
 import importlib
 from inspect import getsource
 
-from eTOXlie.etox import settings
-from eTOXlie.etox.core import modelHandler
+from eTOX_ALLIES.etox import settings
+from eTOX_ALLIES.etox.core import modelHandler
 
 modelDir = settings.get('modelDir')
 

@@ -10,10 +10,10 @@ import pybel as pb
 import openbabel as ob
 from glob import glob
 
-from eTOXlie.etox import settings
-from eTOXlie.etox.core import modelHandler
-from eTOXlie.etox.topology.amber import refineTau
-from eTOXlie.etox.core.geometry import findOcpd1, normhem, distance as dist
+from eTOX_ALLIES.etox import settings
+from eTOX_ALLIES.etox.core import modelHandler
+from eTOX_ALLIES.etox.topology.amber import refineTau
+from eTOX_ALLIES.etox.core.geometry import findOcpd1, normhem, distance as dist
 
 AMBERHOME = settings.get('AMBERHOME')
 ACPYPE = settings.get('ACPYPE')

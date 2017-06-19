@@ -9,13 +9,13 @@ from flask import render_template, url_for, request, Response, send_file
 from numpy import corrcoef
 from gui.app import app
 
-from eTOXlie import __rootpath__
-from eTOXlie.etox.core import jobHandler
-from eTOXlie.etox.core import modelHandler
-from eTOXlie.etox.core import plotting
-from eTOXlie.etox.core.main import submitScreen, updateJobsStatus
-import eTOXlie.etox.core.modelTemplates as modTemp
-import eTOXlie.etox.core.eTOXlab_integration as eLab
+from eTOX_ALLIES import __rootpath__
+from eTOX_ALLIES.etox.core import jobHandler
+from eTOX_ALLIES.etox.core import modelHandler
+from eTOX_ALLIES.etox.core import plotting
+from eTOX_ALLIES.etox.core.main import submitScreen, updateJobsStatus
+import eTOX_ALLIES.etox.core.modelTemplates as modTemp
+import eTOX_ALLIES.etox.core.eTOXlab_integration as eLab
 
 json_settings = os.path.join(__rootpath__, 'data/settings.json')
 with open(json_settings) as st:

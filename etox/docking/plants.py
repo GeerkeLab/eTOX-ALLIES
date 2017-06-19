@@ -9,7 +9,7 @@ import textwrap
 import shutil
 import glob
 
-from eTOXlie.etox.core.molHandler import mols2single
+from eTOX_ALLIES.etox.core.molHandler import mols2single
 from .. import settings
 
 PLANTS = settings.get('PLANTS')

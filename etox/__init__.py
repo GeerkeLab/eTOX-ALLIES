@@ -2,7 +2,7 @@ import os
 import sys
 import json
 
-from eTOXlie import __rootpath__
+from eTOX_ALLIES import __rootpath__
 
 json_settings = os.path.join(__rootpath__, 'data/settings.json')
 settings = {}

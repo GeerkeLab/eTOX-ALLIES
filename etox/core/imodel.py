@@ -24,9 +24,9 @@ import os
 import logging
 from time import sleep 
 
-from eTOXlie.etox import settings
-from eTOXlie.etox.core import jobHandler
-from eTOXlie.etox.core.main import submitScreen, screenSDF
+from eTOX_ALLIES.etox import settings
+from eTOX_ALLIES.etox.core import jobHandler
+from eTOX_ALLIES.etox.core.main import submitScreen, screenSDF
 
 etoxlie_folder=settings.get('etoxlie_folder')
 

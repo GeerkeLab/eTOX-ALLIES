@@ -25,6 +25,7 @@ _PY_SUPPORTED=( 2\.7\* )
 _PY_PACKAGES=( )
 _PY_VENV=
 _PY_VENV_ACTIVE=0
+_VENVPATH=${ROOTDIR}/.etox_venv
 
 # Sed the right version of sed for multi-platform use.
 SED=$( which gsed )
@@ -192,25 +193,25 @@ function _resolve_python_venv () {
         _PY_VENV="$VENVTOOL -p $_PYTHON_PATH"
         
         else   
-        # Look for virtualenv tool that may be named differently
-        local _virtualenv
-        local _pyv_venv_options=( "virtualenv" "virtualenv-${_PYV%.*}" )
-        for pyv_venv in "${_pyv_venv_options[@]}"; do
-            _virtualenv=$( which $pyv_venv )
-            if [[ ! -z $_virtualenv ]]; then
-            break
-            fi
-        done
+          # Look for virtualenv tool that may be named differently
+          local _virtualenv
+          local _pyv_venv_options=( "virtualenv" "virtualenv-${_PYV%.*}" )
+          for pyv_venv in "${_pyv_venv_options[@]}"; do
+              _virtualenv=$( which $pyv_venv )
+              if [[ ! -z $_virtualenv ]]; then
+              break
+              fi
+          done
         
-        if [[ -z $_virtualenv ]]; then
-            echo "ERROR: For Python version $_PYV the 'virtualenv' tool is required for installation of eTOXlie dependencies"
-            echo "ERROR: It could not be found looking for: "${_pyv_venv_options[@]}" $VENVTOOL"
-            echo "ERROR: If you have virtualenv installed, supply the path using the -e/--venv argument or"
-            echo "ERROR: Install using 'pip install virtualenv' or similar"
-            exit 1
-        fi
+          if [[ -z $_virtualenv ]]; then
+              echo "ERROR: For Python version $_PYV the 'virtualenv' tool is required for installation of eTOXlie dependencies"
+              echo "ERROR: It could not be found looking for: "${_pyv_venv_options[@]}" $VENVTOOL"
+              echo "ERROR: If you have virtualenv installed, supply the path using the -e/--venv argument or"
+              echo "ERROR: Install using 'pip install virtualenv' or similar"
+              exit 1
+          fi
         
-        _PY_VENV="$_virtualenv -p $_PYTHON_PATH"
+          _PY_VENV="$_virtualenv -p $_PYTHON_PATH"
         fi
     fi
     
@@ -310,20 +311,20 @@ function _activate_py_venv () {
 function _setup_venv () {
     
     # Create or upgrade the Python virtual environment
-    if [ ! -d $_VENVPATH ]; then
+    if [ -d $_VENVPATH ]; then
         
         # Remove and reinstall venv
         if [[ $FORCE -eq 1 ]]; then
-        echo "INFO: Reinstall Python virtual environment at ${_VENVPATH}"
-        rm -rf $_VENVPATH
-        pipenv install
+          echo "INFO: Reinstall Python virtual environment at ${_VENVPATH}"
+          \rm -rf $_VENVPATH
+          $_PY_VENV $_VENVPATH
         else
-        echo "INFO: Virtual environment present, not reinstalling"
+          echo "INFO: Virtual environment present, not reinstalling"
         fi
         
     else
         echo "INFO: Create Python virtual environment"
-        pipenv install
+        $_PY_VENV $_VENVPATH
     fi
     
     return 0
@@ -341,45 +342,14 @@ function _install_update_packages () {
         echo "ERROR: unable to activate Python virtual environment. pip not found"
         exit 1
     fi
-    
-    # Download python packages not in pip
-    cd ${ROOTDIR}/components
-    for py_package in "${_PY_PACKAGES[@]}"; do
-        echo "INFO: download Python package: " $py_package
-        wget $py_package
-        if [[ -f 'master.zip' ]]; then
-        unzip 'master.zip'
-        if [[ -d 'crossbar-master' ]]; then
-            pip install $_force_reinstall "${ROOTDIR}/components/crossbar-master/"
-            \rm -rf 'crossbar-master'
-        fi
-        \rm -f 'master.zip'  
-        fi
-    done
-    cd ${ROOTDIR}
-        
+            
     # Update virtual environment
     if [[ $UPDATE -eq 1 ]]; then
         echo "INFO: Update Python virtual environment at $_VENVPATH"
-        pipenv update
+        $PIPPATH freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
     else
-        pipenv install
+        $PIPPATH install -r ${ROOTDIR}/Pipfile
     fi
-
-    # Install all eTOXlie component packages and their dependencies using pip
-    local _force_reinstall=''
-    [[  $UPDATE -eq 1 ]] && _force_reinstall='--upgrade'
-    
-    local _local_install=''
-    [[  $LOCALDEV -eq 1 ]] && _local_install='-e'
-    
-    # Install eTOXlie components using pip
-    for package in $( ls -d ${ROOTDIR}/components/*/ ); do
-        if [[ -e ${package}/setup.py ]]; then
-            echo "INFO: Install eTOXlie Python component ${package}"
-            pip install $_force_reinstall $_local_install $package
-        fi
-    done
     
     return 0
 }

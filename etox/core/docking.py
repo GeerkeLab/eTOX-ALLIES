@@ -4,9 +4,9 @@ import logging
 import shutil
 import subprocess as sp
 
-from eTOXlie.etox.core.molHandler import *
-from eTOXlie.etox.core.cluster import *
-from eTOXlie.etox.core import jobHandler
+from eTOX_ALLIES.etox.core.molHandler import *
+from eTOX_ALLIES.etox.core.cluster import *
+from eTOX_ALLIES.etox.core import jobHandler
 
 def dockLie(fn,wdir,ProtParam,fmt='mol2',soft='plants', redCoords=True,algo='kmean',outMedoids='medoids.dat',killSig='/KILL', killer=None):
     

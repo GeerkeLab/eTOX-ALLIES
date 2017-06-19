@@ -9,13 +9,13 @@ import openbabel as ob
 import time
 import numpy as np
 
-from eTOXlie.etox import settings
-from eTOXlie.etox.core import jobHandler
-from eTOXlie.etox.core.modelHandler import loadModel, saveModel,listModels
-from eTOXlie.etox.core.docking import dockLie
-from eTOXlie.etox.core.MDrunner import *
-from eTOXlie.etox.core.utility_lie import calibrateLie, predictLie, predictError
-from eTOXlie.etox.core.utility_AD import calibrateAD, predictAD
+from eTOX_ALLIES.etox import settings
+from eTOX_ALLIES.etox.core import jobHandler
+from eTOX_ALLIES.etox.core.modelHandler import loadModel, saveModel,listModels
+from eTOX_ALLIES.etox.core.docking import dockLie
+from eTOX_ALLIES.etox.core.MDrunner import *
+from eTOX_ALLIES.etox.core.utility_lie import calibrateLie, predictLie, predictError
+from eTOX_ALLIES.etox.core.utility_AD import calibrateAD, predictAD
 
 etoxlie_folder=settings.get('etoxlie_folder')
 modelDir=settings.get('modelDir')

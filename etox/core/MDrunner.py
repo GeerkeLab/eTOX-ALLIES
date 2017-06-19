@@ -14,8 +14,8 @@ import time
 
 remove_projdir_on_fail = False
 
-from eTOXlie.etox import settings
-from eTOXlie.etox.core import jobHandler
+from eTOX_ALLIES.etox import settings
+from eTOX_ALLIES.etox.core import jobHandler
 
 def copyFilesLocal(listFiles,destDir):
     try:

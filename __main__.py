@@ -42,7 +42,7 @@ for path in sys.path:
         venv_active = True
 if not venv_active:
     print('Python virtual environment not active. Activate using the shell (bash) command:')
-    print('source {0}/.venv/bin/activate'.format(__rootpath__))
+    print('source {0}/.etox_venv/bin/activate'.format(__rootpath__))
     sys.exit(1)
 
 # Init base logger

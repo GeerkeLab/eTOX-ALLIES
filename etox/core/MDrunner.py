@@ -38,15 +38,15 @@ def prepareMD(wdir,itpLig,pdbLig, proteinPoses,model,dirSimPref='sim',localExe=T
     currDir=os.getcwd()
 
     try:
-        topology=importlib.import_module("eTOXlie.etox.topology.%s"%model['forceField'])
+        topology=importlib.import_module("eTOX_ALLIES.etox.topology.%s"%model['forceField'])
     except Exception, e:
         logging.error('Error in loading module "{0}": {1}'.format(model['forceField'],e))
         sys.exit()
 
     listFiles=[]
     
-    GMXMD = settings.get('GMXMD')
-    ENERGYANALYSIS = settings.get('ENERGYANALYSIS')
+    GMXMD = os.path.join(settings.get('etoxlie_root_dir'), 'bin/gmx45md.sh')
+    ENERGYANALYSIS = os.path.join(settings.get('etoxlie_root_dir'), 'bin/getEnergies.py')
     GMXRC = settings.get('GMXRC')
     
     listFiles.extend([GMXMD,ENERGYANALYSIS])

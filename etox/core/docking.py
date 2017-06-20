@@ -15,7 +15,7 @@ def dockLie(fn,wdir,ProtParam,fmt='mol2',soft='plants', redCoords=True,algo='kme
     currDir=os.getcwd()
     
     try:
-        softSpec=importlib.import_module("eTOXlie.etox.docking.{0}".format(soft.lower()))
+        softSpec=importlib.import_module("eTOX_ALLIES.etox.docking.{0}".format(soft.lower()))
     except Exception, e:
         errorMsg='Implementation for the software %s is not available: %s'%(soft,e)
         logging.error(errorMsg)

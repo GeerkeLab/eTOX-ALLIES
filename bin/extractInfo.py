@@ -15,7 +15,7 @@ from eTOX_ALLIES.etox.core import jobHandler
 
 from settings import modelDir, tmpFolder
 
-def loadTrainInfo(item,modProt,modProtVer,modelDir=settings.get('modelDir')):  
+def loadTrainInfo(item,modProt,modProtVer,modelDir=settings.get('etoxlie_model_dir')):  
     protVer='%04d'%modProtVer
     pathParams=os.path.join(modelDir,modProt,protVer,'params.pkl')
     if os.path.exists(pathParams):
@@ -527,7 +527,7 @@ if __name__=="__main__":
         sys.exit(1) 
 
     if args.job is not None:
-        extractJob(args.job, settings.get('tmpFolder'), settings.get('modelDir'), outPref=args.outPref)
+        extractJob(args.job, settings.get('tmpFolder'), settings.get('etoxlie_model_dir'), outPref=args.outPref)
         
     if args.model is not None:
         try:

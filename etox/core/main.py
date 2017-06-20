@@ -18,7 +18,7 @@ from eTOX_ALLIES.etox.core.utility_lie import calibrateLie, predictLie, predictE
 from eTOX_ALLIES.etox.core.utility_AD import calibrateAD, predictAD
 
 etoxlie_folder=settings.get('etoxlie_folder')
-modelDir=settings.get('modelDir')
+modelDir=settings.get('etoxlie_model_dir')
 statEndJob=['FAILED','CANCELLED','DONE']
 
 def protonate(sdf, fileOut, pHcorr=True, pH=7.5):
@@ -108,7 +108,7 @@ def calculateInteractions(job, localExe=True, killer=None, sshConn=None, dock_so
     suffOut='2MD'
     if job.status == 'PROTONATED' and not killer.kill_now:
         logging.debug('Topology creation in process...')
-        topology=importlib.import_module("eTOXlie.etox.topology.%s"%model['forceField'])
+        topology=importlib.import_module("eTOX_ALLIES.etox.topology.%s"%model['forceField'])
         success,results=topology.createTopology(optiSdf,job.dirTemp,fmtIn='sdf',suffOut=suffOut)
         if success:
             job.status = 'TOPOLOGY'

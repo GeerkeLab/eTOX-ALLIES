@@ -64,7 +64,7 @@ def home():
 
 @app.route('/submit')
 def submit():
-    listModels,listVers=listModVers(settings.get('modelDir'))
+    listModels,listVers=listModVers(settings.get('etoxlie_model_dir'))
     return render_template('submit.html',listModels=listModels,listVers=listVers)
 
 
@@ -76,7 +76,7 @@ def createJob():
         modelId['modelProt']=request.form['ProtMod']
         
         #check model
-        listModels=modelHandler.listModels(settings.get('modelDir'))
+        listModels=modelHandler.listModels(settings.get('etoxlie_model_dir'))
         model=next((item for item in listModels if item["name"] == modelId['modelProt']),None)
         if model is None:
             raise Exception('Model protein not found')
@@ -135,13 +135,13 @@ def createJob():
 
 @app.route('/models')
 def model():
-    listModels,listVers=listModVers(settings.get('modelDir'))
+    listModels,listVers=listModVers(settings.get('etoxlie_model_dir'))
     return render_template('models.html',listModels=listModels,listVers=listVers)
 
 
 @app.route('/models/descModel/<prot>')
 def modelDesc(prot):
-    protDir=os.path.join(settings.get('modelDir'),prot)
+    protDir=os.path.join(settings.get('etoxlie_model_dir'),prot)
     success, model=modelHandler.loadModel(protDir, prediction=False, verModel=0, modelFN='model.dat')
     if not success:
         return "Model not found :'-("
@@ -152,7 +152,7 @@ def modelDesc(prot):
 
 @app.route('/models/descModVer/<prot>/<ver>')
 def modelDescVer(prot,ver):
-    protDir=os.path.join(settings.get('modelDir'),prot)
+    protDir=os.path.join(settings.get('etoxlie_model_dir'),prot)
     success, (model,params)=modelHandler.loadModel(protDir, prediction=True, verModel=int(ver), modelFN='model.dat')
     
     # compute pearson r, spearman s
@@ -239,7 +239,7 @@ def createModel():
                              })
         
         modelData['protConfs']=protList
-        success,results=modTemp.prepareModel(settings.get('modelDir'),modelData,settings.get('etoxlie_folder'),radiusRes=16)
+        success,results=modTemp.prepareModel(settings.get('etoxlie_model_dir'),modelData,settings.get('etoxlie_folder'),radiusRes=16)
         if not success:
             raise Exception(results)
         
@@ -292,7 +292,7 @@ def about():
 @app.route('/Download/<typeReq>/<id>/<key>')
 def downloadFile(typeReq,id,key):
     if typeReq=='model':
-        sdir=settings.get('modelDir')
+        sdir=settings.get('etoxlie_model_dir')
     elif typeReq=='job':
         sdir=settings.get('etoxlie_folder')
     

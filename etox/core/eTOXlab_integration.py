@@ -5,7 +5,7 @@ from inspect import getsource
 from eTOX_ALLIES.etox import settings
 from eTOX_ALLIES.etox.core import modelHandler
 
-modelDir = settings.get('modelDir')
+modelDir = settings.get('etoxlie_model_dir')
 
 
 def linkElab(keyElab='ETOXLABHOME', overWrite=True):

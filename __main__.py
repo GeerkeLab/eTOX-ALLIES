@@ -73,7 +73,14 @@ def bootstrap_app(args):
         if key in settings:
             settings[key] = value
     
-    # Update the eTOXlie project folder
+    # Update the eTOX ALLIES root directory
+    settings['etoxlie_root_dir'] = __rootpath__
+    
+    # Update eTOX ALLIES model directory if needed
+    if not 'etoxlie_model_dir' in settings:
+        settings['etoxlie_model_dir'] = os.path.join(__rootpath__, 'models')
+    
+    # Update the eTOX ALLIES project folder
     etoxlie_folder = settings.get('etoxlie_folder', '')
     if not len(etoxlie_folder):
         etoxlie_folder = os.path.abspath('{0}/eTOXLie_projects'.format(os.environ['HOME']))

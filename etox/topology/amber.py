@@ -20,7 +20,7 @@ import topology
 
 AMBERHOME = settings.get('AMBERHOME')
 ACPYPE = settings.get('ACPYPE')
-DATADIR = settings.get('DATADIR')
+DATADIR = os.path.join(settings.get('etoxlie_root_dir'), 'bin/files/')
 GROMACSHOME = settings.get('GROMACSHOME')
 
 tleap=os.path.join(AMBERHOME, 'bin/tleap')

@@ -17,7 +17,7 @@ from eTOX_ALLIES.etox.core.geometry import findOcpd1, normhem, distance as dist
 
 AMBERHOME = settings.get('AMBERHOME')
 ACPYPE = settings.get('ACPYPE')
-DATADIR = settings.get('DATADIR')
+DATADIR = os.path.join(settings.get('etoxlie_root_dir'), 'bin/files/')
 GROMACSHOME = settings.get('GROMACSHOME')
 
 ob.obErrorLog.SetOutputLevel(0)
@@ -41,9 +41,9 @@ def prepareModel(modelDir,modelData,etoxlie_folder,radiusRes=16):
                 print modelData[i]
        
         ## FROM DOCKING MODULE LOAD REQUIRED FORMAT
-        dockFMT=(importlib.import_module("eTOXlie.etox.docking.%s"%modelData['dockSoftware'])).INPUTFMT 
+        dockFMT=(importlib.import_module("eTOX_ALLIES.etox.docking.%s"%modelData['dockSoftware'])).INPUTFMT 
         ## FROM TOPOLOGY MODULE LOAD appropriate function
-        prepareGMX=(importlib.import_module("eTOXlie.etox.topology.%s"%modelData['forceField'])).prepareGMX
+        prepareGMX=(importlib.import_module("eTOX_ALLIES.etox.topology.%s"%modelData['forceField'])).prepareGMX
 
         # preliminary check consistency structures
         seqs=[]

@@ -259,7 +259,8 @@ function _executable_autodetect() {
   if [[ ! -z "$_ACPYPE" ]]; then
     echo "INFO: found acpype.py at $_ACPYPE"
     
-    $SED -i '' "s~\"ACEPYPE.*~\"ACEPYPE\": \"$_ACPYPE\",~" ${ROOTDIR}/data/settings.json
+    $SED "s~\"ACEPYPE.*~\"ACEPYPE\": \"$_ACPYPE\",~" ${ROOTDIR}/data/settings.json > ${ROOTDIR}/data/temp.json 
+    \mv ${ROOTDIR}/data/temp.json ${ROOTDIR}/data/settings.json
   fi
   
   # Autodetect GROMACS
@@ -268,15 +269,19 @@ function _executable_autodetect() {
     _GROMACS=${_GMXRC%%/bin/gmxrc}
     echo "INFO: found gromacs at $_GROMACS"
     
-    $SED -i '' "s~\"GMXRC.*~\"GMXRC\": \"$_GMXRC\",~" ${ROOTDIR}/data/settings.json
-    $SED -i '' "s~\"GROMACSHOME.*~\"GROMACSHOME\": \"$_GROMACS\",~" ${ROOTDIR}/data/settings.json
+    $SED "s~\"GMXRC.*~\"GMXRC\": \"$_GMXRC\",~" ${ROOTDIR}/data/settings.json > ${ROOTDIR}/data/temp.json 
+    \mv ${ROOTDIR}/data/temp.json ${ROOTDIR}/data/settings.json
+    
+    $SED "s~\"GROMACSHOME.*~\"GROMACSHOME\": \"$_GROMACS\",~" ${ROOTDIR}/data/settings.json > ${ROOTDIR}/data/temp.json
+    \mv ${ROOTDIR}/data/temp.json ${ROOTDIR}/data/settings.json
   fi
   
   # Autodetect AMBER
   if [[ ! -z "$AMBERHOME" ]]; then
     echo "INFO: found AMBER at $AMBERHOME"
     
-    $SED -i '' "s~\"AMBERHOME.*~\"AMBERHOME\": \"$AMBERHOME\",~" ${ROOTDIR}/data/settings.json
+    $SED "s~\"AMBERHOME.*~\"AMBERHOME\": \"$AMBERHOME\",~" ${ROOTDIR}/data/settings.json > ${ROOTDIR}/data/temp.json
+    \mv ${ROOTDIR}/data/temp.json ${ROOTDIR}/data/settings.json
   fi
   
   # Autodetect PLANTS
@@ -284,7 +289,8 @@ function _executable_autodetect() {
   if [[ ! -z "$_PLANTS" ]]; then
     echo "INFO: found plants at $_PLANTS"
     
-    $SED -i '' "s~\"PLANTS.*~\"PLANTS\": \"$_PLANTS\",~" ${ROOTDIR}/data/settings.json
+    $SED "s~\"PLANTS.*~\"PLANTS\": \"$_PLANTS\",~" ${ROOTDIR}/data/settings.json > ${ROOTDIR}/data/temp.json
+    \mv ${ROOTDIR}/data/temp.json ${ROOTDIR}/data/settings.json
   fi
   
   # Autodetect PARADOCKS
@@ -292,7 +298,8 @@ function _executable_autodetect() {
   if [[ ! -z "$_PARADOCKS" ]]; then
     echo "INFO: found paradocks at $_PARADOCKS"
     
-    $SED -i '' "s~\"PARADOCKS.*~\"PARADOCKS\": \"$_PARADOCKS\",~" ${ROOTDIR}/data/settings.json
+    $SED "s~\"PARADOCKS.*~\"PARADOCKS\": \"$_PARADOCKS\",~" ${ROOTDIR}/data/settings.json > ${ROOTDIR}/data/temp.json
+    \mv ${ROOTDIR}/data/temp.json ${ROOTDIR}/data/settings.json
   fi
 }
 
@@ -391,8 +398,10 @@ if [[ $SETUP -eq 1 && $NO_VENV -eq 0 ]]; then
 fi
 
 # 4) Install/update python packages
-if [[ $SETUP -eq 1 || $UPDATE -eq 1 ]]; then
-    _install_update_packages
+if [[ $NO_VENV -eq 0 ]]; then
+  if [[ $SETUP -eq 1 || $UPDATE -eq 1 ]]; then
+      _install_update_packages
+  fi
 fi
 
 # 5) Autodetect essential third-party executables

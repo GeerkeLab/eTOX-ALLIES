@@ -145,6 +145,7 @@ def modelDesc(prot):
     success, model=modelHandler.loadModel(protDir, prediction=False, verModel=0, modelFN='model.dat')
     if not success:
         return "Model not found :'-("
+    logging.debug('Load model {0} version {1} from: {2}'.format(prot,0,protDir))
     
     # Source model parameters
     return render_template('modelDesc.html',model=model)
@@ -154,6 +155,7 @@ def modelDesc(prot):
 def modelDescVer(prot,ver):
     protDir=os.path.join(settings.get('etoxlie_model_dir'),prot)
     success, (model,params)=modelHandler.loadModel(protDir, prediction=True, verModel=int(ver), modelFN='model.dat')
+    logging.debug('Load model {0} version {1} from: {2}'.format(prot,ver,protDir))
     
     # compute pearson r, spearman s
     Gcalc=[float(x['Gcalc']) for x in params['trainSet']]
@@ -179,7 +181,7 @@ def modelDescVer(prot,ver):
     img=plotting.plotLIE(params['trainSet'])
     svg=plotting.fixSVG(img,h=400)
     
-    return render_template('modelVersDesc.html',param=params,plot= svg)#send_file(a, mimetype='image/svg+xml'))
+    return render_template('modelVersDesc.html', param=params, plot=svg)#send_file(a, mimetype='image/svg+xml'))
 
 
 @app.route('/models/descModPlot/<prot>/<ver>')

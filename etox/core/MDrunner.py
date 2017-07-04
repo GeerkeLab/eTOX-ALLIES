@@ -4,7 +4,7 @@ import logging
 import shutil
 import pybel as pb
 from glob import glob
-import subprocess as sp
+import subprocess32 as sp
 import re
 import pandas as pd
 import numpy as np

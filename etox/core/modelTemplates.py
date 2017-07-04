@@ -1,7 +1,7 @@
 # Create template for docking. Perform it wih amber FF (all atoms) and gromacs for minimization
 
 import os, sys
-import subprocess as sp
+import subprocess32 as sp
 import importlib
 from tempfile import mkdtemp
 from shutil import rmtree

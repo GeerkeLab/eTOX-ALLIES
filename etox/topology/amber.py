@@ -9,7 +9,7 @@ and return a tuple containing itp and pdb of the ligand.
 import sys
 import os
 import pybel
-import subprocess
+import subprocess32 as sp
 import shutil
 import logging
 import re
@@ -59,7 +59,7 @@ def createTopology(fileIn,wdir,fmtIn=None,suffOut='2MD'):
     
     try:
         outputFiles=[]
-        ac=subprocess.Popen(cmd,stdout=subprocess.PIPE, env=tempEnv)
+        ac=sp.Popen(cmd,stdout=sp.PIPE, env=tempEnv)
         for line in ac.stdout:
             logging.debug('ACPYPE STDOUT: %s'%line.rstrip())
         shutil.copy(os.path.join(wdir,'%s.acpype'%fileTemp,'%s_GMX.itp'%fileTemp), os.path.join(wdir,"%s.itp"%fileOut)) 
@@ -398,7 +398,7 @@ def convertAmber2PQR(prmtop,inpcrd,outprefix):
     locEnv['AMBERHOME']=AMBERHOME
 
     cmd =  [ambpdb, '-p', prmtop, '-pqr']
-    apdbProc=subprocess.Popen(cmd, env=locEnv,stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+    apdbProc=sp.Popen(cmd, env=locEnv,stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)
     out=apdbProc.communicate(input=coords)[0]
     pqr=out
     ## PATCH FOR OPENBABEL 11/2015
@@ -473,7 +473,7 @@ def convertAmber2GMX(prmtop,inpcrd):
     locEnv['PATH']=locEnv['PATH']+':'+AMBERHOME
     locEnv['AMBERHOME']=AMBERHOME    
     cmd =  [ACPYPE, '-p', prmtop, '-x',inpcrd]
-    pacpype=subprocess.Popen(cmd, env=locEnv)
+    pacpype=sp.Popen(cmd, env=locEnv)
     pacpype.wait()
     pref=os.path.splitext(os.path.split(prmtop)[1])[0]
     outtop=os.path.join(os.getcwd(),'%s_GMX.top'%(pref))
@@ -523,7 +523,7 @@ def gmxTest(top,gro):
     locEnv=os.environ.copy()
     gmx_min('test.mdp')
     cmd = [grompp, '-f', 'test.mdp', '-p', top, '-c', gro, '-o', 'test.tpr']
-    grmp=subprocess.Popen(cmd, env=locEnv)
+    grmp=sp.Popen(cmd, env=locEnv)
     grmp.wait()
     
     if os.path.exists('test.tpr'):

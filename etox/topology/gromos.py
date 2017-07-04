@@ -11,7 +11,7 @@ from time import sleep
 from molhandle import *
 from bs4 import BeautifulSoup
 import os
-import subprocess
+import subprocess32 as sp
 import time
 import shutil
 import logging
@@ -62,7 +62,7 @@ def ac_topo(ft,fn,wdir,addH=False):
   cmd =  [ACPYPE, '-i', 'atbinput.mol2', '-n', str(charge)]
   out=''
   err=''
-  ac=subprocess.call(cmd,stdout=subprocess.PIPE)
+  ac=sp.call(cmd,stdout=sp.PIPE)
   logging.info('AC topology created with success')
   logging.info('copy the file in %s'%os.path.join(wdir,'atbinput.acpype','atbinput_GMX.itp'))
   shutil.copy(os.path.join(wdir,'atbinput.acpype','atbinput_GMX.itp'), wdir+'/atb1.txt')  

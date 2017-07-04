@@ -2,7 +2,7 @@ import sys, os
 import importlib
 import logging
 import shutil
-import subprocess as sp
+import subprocess32 as sp
 
 from eTOX_ALLIES.etox.core.molHandler import *
 from eTOX_ALLIES.etox.core.cluster import *

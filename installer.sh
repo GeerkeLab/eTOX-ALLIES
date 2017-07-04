@@ -18,6 +18,7 @@ FORCE=0
 PYTHON='python2.7'
 VENVTOOL=
 NO_VENV=0
+USE_CONDA=0
 
 # Internal variables
 _PYTHON_PATH=
@@ -26,7 +27,7 @@ _PY_SUPPORTED=( 2\.7\* )
 _PY_PACKAGES=( )
 _PY_VENV=
 _PY_VENV_ACTIVE=0
-_VENVPATH=${ROOTDIR}/.etox_venv
+_VENVPATH=${ROOTDIR}/etox_venv
 
 # Sed the right version of sed for multi-platform use.
 SED=$( which gsed )
@@ -52,6 +53,7 @@ Installation/update variables:
                     Currently the Python 2.x virtualenv
 -l|--local-dev      Installs lie studio components inplace, making the easily editable.
 -n|--no-venv        Do not use a virtual environment but system installed python packages
+-c|--conda          Setup virtual environment using conda/miniconda
 
 -h|--help:          This help message
 """
@@ -90,6 +92,10 @@ for i in "$@"; do
         ;;
         -n|--no-venv)
         NO_VENV=1
+        shift # past argument with no value
+        ;;
+        -c|--conda)
+        USE_CONDA=1
         shift # past argument with no value
         ;;
         *)
@@ -306,22 +312,29 @@ function _executable_autodetect() {
 # Check if virtual environment is installed and activate
 function _activate_py_venv () {
     
-    if [[ ! -e ${_VENVPATH}'/bin/activate' ]]; then
-        echo "ERROR: Python virtual environment not installed (correctly)"
-        echo "ERROR: Unable to activate it, not activation script at ${_VENVPATH}/bin/activate"
-        exit 1
-    fi
+    if [[ $USE_CONDA -eq 0 ]]; then
     
-    if [[ $_PY_VENV_ACTIVE -eq 0 ]]; then
-        source ${_VENVPATH}'/bin/activate'
-        _PY_VENV_ACTIVE=1
-    fi
+      if [[ ! -e ${_VENVPATH}'/bin/activate' ]]; then
+          echo "ERROR: Python virtual environment not installed (correctly)"
+          echo "ERROR: Unable to activate it, not activation script at ${_VENVPATH}/bin/activate"
+          exit 1
+      fi
+    
+      if [[ $_PY_VENV_ACTIVE -eq 0 ]]; then
+          source ${_VENVPATH}'/bin/activate'
+      fi
+      
+    else
+      source activate etox_venv
+    fi  
+    
+    _PY_VENV_ACTIVE=1
 }
 
 # Setup the Python virtual environment
 # - No virtual environment path yet, create it
 # - Already there, optionally force reinstall
-function _setup_venv () {
+function _setup_python_venv () {
     
     # Create or upgrade the Python virtual environment
     if [ -d $_VENVPATH ]; then
@@ -341,6 +354,37 @@ function _setup_venv () {
     fi
     
     return 0
+}
+
+# Setup the conda/miniconda managed virtual environment
+function _setup_conda_venv () {
+    
+  local _CONDA=$( which conda )
+  if [[ ! -z "$_CONDA" ]]; then
+    
+    # Create or upgrade the Conda virtual environment
+    if [[ ! -z "$( $_CONDA info --envs | grep etox_venv )" ]]; then
+        
+        # Remove and reinstall venv
+        if [[ $FORCE -eq 1 ]]; then
+          echo "INFO: Reinstall Conda virtual environment"
+          $_CONDA remove --name etox_venv --all
+          $_CONDA create --name etox_venv
+        else
+          echo "INFO: Virtual environment present, not reinstalling"
+        fi
+        
+    else
+      echo "INFO: Create conda/miniconda managed virtual environmentnames 'etox_venv'"
+      $_CONDA create --name etox_venv
+    fi
+    
+  else
+    echo "ERROR: conda executable not found. Unable to install virtual environment"
+    exit 1
+  fi
+  
+  return 0
 }
 
 # Install python packages in virtual environment
@@ -383,7 +427,14 @@ cd $ROOTDIR
 # 1) Resolve Python version and virtual env options
 if [[ $NO_VENV -eq 0 ]]; then
   _resolve_python_version
-  _resolve_python_venv
+  
+  # 1.1) Use default Python venv tool or Conda managed virtual environment
+  if [[ $USE_CONDA -eq 0 ]]; then
+    _resolve_python_venv
+  else
+    echo "INFO: Use conda/miniconda managed virtual environment"
+  fi
+  
 else
   echo "INFO: Skip setup of Python virtual environment."
   echo "INFO: Python package dependencies should be installed on the system."
@@ -394,7 +445,13 @@ _check_dir_structure
 
 # 3) Install virtual environment
 if [[ $SETUP -eq 1 && $NO_VENV -eq 0 ]]; then
-     _setup_venv
+  
+  # 3.1) Install Python or conda/miniconda virtual environment
+  if [[ $USE_CONDA -eq 0 ]]; then
+    _setup_python_venv
+  else
+    _setup_conda_venv
+  fi
 fi
 
 # 4) Install/update python packages
@@ -408,7 +465,11 @@ fi
 _executable_autodetect
 
 # Deactivate Python venv
-deactivate >/dev/null 2>&1
+if [[ $USE_CONDA -eq 0 ]]; then
+  deactivate >/dev/null 2>&1
+else
+  source deactivate
+fi
 
 # Finish
 echo "NOTE: eTOXlie installation succesful"

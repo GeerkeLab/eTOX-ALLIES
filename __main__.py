@@ -32,7 +32,7 @@ verbLevel={
 }
 
 # Check if Python virtual environment is in sys.path
-venv_path = os.getenv('VIRTUAL_ENV', '{0}/.etox_venv'.format(__rootpath__))
+venv_path = os.getenv('VIRTUAL_ENV', '{0}/etox_venv'.format(__rootpath__))
 if os.path.isdir(venv_path):
     venv_active = False
     for path in sys.path:
@@ -42,7 +42,7 @@ if os.path.isdir(venv_path):
             venv_active = True
     if not venv_active:
         print('Python virtual environment not active. Activate using the shell (bash) command:')
-        print('source {0}/.etox_venv/bin/activate'.format(__rootpath__))
+        print('source {0}/etox_venv/bin/activate'.format(__rootpath__))
         sys.exit(1)
 else:
     print('eTOX ALLIES Python virtual environment not installed')

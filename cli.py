@@ -27,7 +27,7 @@ def lie_cli(root_path, prog="eTOXlie", defaults={}):
     parser.add_argument('--loglevel',
                         type=str,
                         dest='etoxlie_loglevel',
-                        default=defaults.get('loglevel','info'),
+                        default=defaults.get('etoxlie_loglevel','info'),
                         choices=['error', 'warn', 'info', 'debug','critical'],
                         help=("Global application log level"))
     parser.add_argument('--logfile',

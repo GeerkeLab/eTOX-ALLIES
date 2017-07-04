@@ -328,6 +328,7 @@ function _activate_py_venv () {
       source activate etox_venv
     fi  
     
+    echo "INFO: Activated Python virtual environment"
     _PY_VENV_ACTIVE=1
 }
 
@@ -395,7 +396,7 @@ function _install_update_packages () {
 
     # Check if pip is in virtual environment
     PIPPATH=$( which pip )
-    if [[ ! "$PIPPATH" == "${_VENVPATH}/bin/pip" ]]; then
+    if [[ -z "$PIPPATH" ]]; then
         echo "ERROR: unable to activate Python virtual environment. pip not found"
         exit 1
     fi

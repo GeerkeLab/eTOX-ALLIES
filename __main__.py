@@ -52,6 +52,9 @@ else:
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s: %(message)s')
 
 # Add eTOXlie application to Python path
+basepath = os.path.abspath(os.path.join(__rootpath__ ,"../"))
+if basepath not in sys.path:
+    sys.path.append(basepath)
 if __rootpath__ not in sys.path:
     sys.path.append(__rootpath__)
     logging.debug('Add eTOXlie to Python Path')
@@ -89,7 +92,7 @@ def bootstrap_app(args):
     if not os.path.exists(etoxlie_folder):
         os.makedirs(etoxlie_folder)
         logging.info('eTOXlie project directory made at: {0}'.format(etoxlie_folder))
-        
+    
     settings['etoxlie_folder'] = etoxlie_folder
     
     # Adjust the logger
@@ -124,7 +127,7 @@ def bootstrap_app(args):
         with open(json_settings, 'w') as st:
             json.dump(settings, st, indent=2, sort_keys=True)
             logging.info('Update eTOXlie settings.json file: {0}'.format(json_settings))
-    
+
 def eTOXlie_deamon(settings):
     
     logging.info('Start a new eTOXlie deamon')
@@ -159,7 +162,7 @@ def eTOXlie_deamon(settings):
     
     killer = jobHandler.WarmKiller()
     while True:
-    
+        
         # Check jobs. The function sort the jobs according to the submission date
         listJobs=jobHandler.collectJobs(settings['etoxlie_folder'], sort=True)
         
@@ -185,17 +188,17 @@ def eTOXlie_deamon(settings):
                 if not localExe:
                     sshConn.close()
                 sys.exit(0)
-
+        
         # In case no jobs are present
         if killer.kill_now:
             logging.info("%s Warm Killing"%time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time())))
             if not localExe:
                 sshConn.close()
-            sys.exit(0) 
+            sys.exit(0)
         
         time.sleep(settings.get('etoxlie_deamon_updateinterval', 600))
     
-    
+
 if __name__ == '__main__':
     
     # Launch eTOXlie from command line.
@@ -230,8 +233,8 @@ if __name__ == '__main__':
     time.sleep(1)
     
     # Launch Flask app
-    if settings.get('run_gui', True):    
-
+    if settings.get('run_gui', True):
+        
         from gui.app import app
         app.config.update(**settings)
         app.run(host=settings.get('flask_host'),

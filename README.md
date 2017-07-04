@@ -38,6 +38,11 @@ in a Python virtual environment from the Python package repository (pip).
 To install using the virtual environment run the eTOX ALLIES installer under bash as:
 
     >> ./installer.sh -s
+    
+If you are using Anaconda or Miniconda to manage your Python environment please use the -c option for the installer
+to have eTOX ALLIES use the `conda` command for installation.
+
+    >> ./installer.sh -s -c
 
 The second option is to install eTOX ALLIES without the virtual environment in wich case you are responsible for
 installing third-party Python packages yourself. The required Python dependencies are listed in the Pipfile.

@@ -79,10 +79,10 @@ def dockLie(fn,wdir,ProtParam,fmt='mol2',soft='plants', redCoords=True,algo='kme
                 
                 # Print stdout and stderr
                 if stderrBuffer:
-                    for errline in stderrBuffer.split():
+                    for errline in stderrBuffer.splitlines():
                         logging.debug("DOCKING STDERR: {0}".format(errline.strip()))
                 if stdoutBuffer:
-                    for outline in stdoutBuffer.split():
+                    for outline in stdoutBuffer.splitlines():
                         logging.debug("DOCKING STDOUT: {0}".format(outline.strip()))
                 
                 if (proc.returncode != 0) and (soft != 'paradocks'): # Exception for paradocks. something is wrong with it

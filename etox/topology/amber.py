@@ -70,10 +70,10 @@ def createTopology(fileIn,wdir,fmtIn=None,suffOut='2MD'):
         
         # Print stdout and stderr
         if stderrBuffer:
-            for errline in stderrBuffer.split():
+            for errline in stderrBuffer.splitlines():
                 logging.debug("ACPYPE STDERR: {0}".format(errline.strip()))
         if stdoutBuffer:
-            for outline in stdoutBuffer.split():
+            for outline in stdoutBuffer.splitlines():
                 logging.debug("ACPYPE STDOUT: {0}".format(outline.strip()))
         
         shutil.copy(os.path.join(wdir,'%s.acpype'%fileTemp,'%s_GMX.itp'%fileTemp), os.path.join(wdir,"%s.itp"%fileOut)) 

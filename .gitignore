@@ -6,8 +6,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.venv/
-.etox_venv/
+etox_venv/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

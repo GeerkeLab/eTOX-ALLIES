@@ -11,14 +11,19 @@ from time import sleep
 from molhandle import *
 from bs4 import BeautifulSoup
 import os
-import subprocess32 as sp
 import time
 import shutil
 import logging
-from settings import AMBERHOME
-from settings import ACPYPE
 import re
 
+if os.name == 'posix' and sys.version_info[0] < 3:
+    import subprocess32 as sp
+else:
+    import subprocess as sp
+
+from .. import settings
+AMBERHOME = settings.get('AMBERHOME')
+ACPYPE = settings.get('ACPYPE')
 ATB_URL = 'http://compbio.biosci.uq.edu.au/atb/'
 LOGIN_URL = 'http://compbio.biosci.uq.edu.au/atb/login.py'
 SUBMISSION_URL = 'http://compbio.biosci.uq.edu.au/atb/index.py'

@@ -9,11 +9,15 @@ and return a tuple containing itp and pdb of the ligand.
 import sys
 import os
 import pybel
-import subprocess32 as sp
 import shutil
 import logging
 import re
 import textwrap
+
+if os.name == 'posix' and sys.version_info[0] < 3:
+    import subprocess32 as sp
+else:
+    import subprocess as sp
 
 from .. import settings
 import topology
@@ -60,8 +64,18 @@ def createTopology(fileIn,wdir,fmtIn=None,suffOut='2MD'):
     try:
         outputFiles=[]
         ac=sp.Popen(cmd,stdout=sp.PIPE, env=tempEnv)
-        for line in ac.stdout:
-            logging.debug('ACPYPE STDOUT: %s'%line.rstrip())
+        
+        # Block by communicating with the process, important for thread safety
+        stdoutBuffer, stderrBuffer = ac.communicate()
+        
+        # Print stdout and stderr
+        if stderrBuffer:
+            for errline in stderrBuffer.split():
+                logging.debug("ACPYPE STDERR: {0}".format(errline.strip()))
+        if stdoutBuffer:
+            for outline in stdoutBuffer.split():
+                logging.debug("ACPYPE STDOUT: {0}".format(outline.strip()))
+        
         shutil.copy(os.path.join(wdir,'%s.acpype'%fileTemp,'%s_GMX.itp'%fileTemp), os.path.join(wdir,"%s.itp"%fileOut)) 
         shutil.copy(os.path.join(wdir,'%s.acpype'%fileTemp,'%s_NEW.pdb'%fileTemp), os.path.join(wdir,"%s.pdb"%fileOut))
     except Exception, e:

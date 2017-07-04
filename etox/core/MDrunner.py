@@ -4,13 +4,17 @@ import logging
 import shutil
 import pybel as pb
 from glob import glob
-import subprocess32 as sp
 import re
 import pandas as pd
 import numpy as np
 import tarfile
 import json
 import time
+
+if os.name == 'posix' and sys.version_info[0] < 3:
+    import subprocess32 as sp
+else:
+    import subprocess as sp
 
 remove_projdir_on_fail = False
 

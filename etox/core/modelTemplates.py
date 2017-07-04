@@ -1,10 +1,14 @@
 # Create template for docking. Perform it wih amber FF (all atoms) and gromacs for minimization
 
 import os, sys
-import subprocess32 as sp
 import importlib
 from tempfile import mkdtemp
 from shutil import rmtree
+
+if os.name == 'posix' and sys.version_info[0] < 3:
+    import subprocess32 as sp
+else:
+    import subprocess as sp
 
 import pybel as pb
 import openbabel as ob

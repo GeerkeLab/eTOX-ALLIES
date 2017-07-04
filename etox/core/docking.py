@@ -2,7 +2,11 @@ import sys, os
 import importlib
 import logging
 import shutil
-import subprocess32 as sp
+
+if os.name == 'posix' and sys.version_info[0] < 3:
+    import subprocess32 as sp
+else:
+    import subprocess as sp
 
 from eTOX_ALLIES.etox.core.molHandler import *
 from eTOX_ALLIES.etox.core.cluster import *
@@ -56,32 +60,31 @@ def dockLie(fn,wdir,ProtParam,fmt='mol2',soft='plants', redCoords=True,algo='kme
             softSpec.prepareDocking(rotations,proteinDock,settings)
             
             try:
-                errLog=''
                 logging.debug("Executing command: %s"%' '.join(softSpec.CMD))
                 proc = sp.Popen(softSpec.CMD, stdout=sp.PIPE, stderr=sp.PIPE)
-                       
-                while True:
-                    outLine = proc.stdout.readline()
-                    errLine= proc.stderr.readline()
-                    if outLine == '' and errLine == '' and proc.poll() != None:
-                        break
-                    logging.debug('DOCKING STDOUT: {0}'.format(outLine.strip()))
-                    errLog+=errLine
-                    sys.stdout.flush()
-                    sys.stderr.flush()
-                    
-                    if os.path.exists(killSig) or killer.kill_now:
-                        logging.info("%s Warm Killing runMD function")
-                        jobHandler.killProcs(proc.pid)
-                        os.chdir(currDir)
-                        if os.path.exists(killSig):
-                            os.remove(killSig)
-                            return (True,'CANCELLED')
-                        else:
-                            return (True,'TOPOLOGY')
-                    
-                if len(errLog):
-                    logging.debug("DOCKING STDERR: %s"%errLog)
+                
+                # Block by communicating with the process, important for thread safety
+                stdoutBuffer, stderrBuffer = proc.communicate()
+                
+                # Recieved kill signal
+                if os.path.exists(killSig) or killer.kill_now:
+                    logging.info("%s Warm Killing runMD function")
+                    jobHandler.killProcs(proc.pid)
+                    os.chdir(currDir)
+                    if os.path.exists(killSig):
+                        os.remove(killSig)
+                        return (True,'CANCELLED')
+                    else:
+                        return (True,'TOPOLOGY')
+                
+                # Print stdout and stderr
+                if stderrBuffer:
+                    for errline in stderrBuffer.split():
+                        logging.debug("DOCKING STDERR: {0}".format(errline.strip()))
+                if stdoutBuffer:
+                    for outline in stdoutBuffer.split():
+                        logging.debug("DOCKING STDOUT: {0}".format(outline.strip()))
+                
                 if (proc.returncode != 0) and (soft != 'paradocks'): # Exception for paradocks. something is wrong with it
                     raise Exception, "something went wrong during docking"           
             except Exception,e:
